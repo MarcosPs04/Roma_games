@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="login.css">
+<body>
+    <div class="login-container">
+        <div class="login-header">
+        </div>
+        <form th:action="@{/login}" th:method="post">
+            <label for="email"></label>
+            <input type="text" th:name="email" placeholder="Email">
+            <label for="senha"></label>
+            <input type="password" th:name="senha" placeholder="Senha">
+            <div class="options">
+                <label>
+                    <input type="checkbox" name="lembrar"> Lembrar
+                </label>
+                <a href="#" class="forgot">Esqueci minha senha</a>
+            </div>
+            <button class="login-button" type="submit">Acessar</button>
+        </form>
+        <br>
+        <!-- Use um link para navegar até a tela de cadastro (GET /cadastro) -->
+        <a th:href="@{/cadastro}" class="login-button">Cadastrar</a>
+            </form>
+        </form>
+    </div>
+</body>

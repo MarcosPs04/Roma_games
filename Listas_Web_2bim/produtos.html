@@ -1,0 +1,28 @@
+<h1>Produtos</h1>
+
+<ul>
+    <li><a href="/formularioProduto">Adicionar Produtos</a></li>
+</ul>
+
+<h1 th:if="${#lists.size(produtos) == 0}">Sem produtos</h1>
+
+<h1 th:if="${#lists.size(produtos) > 0}">
+    <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Ações</th>
+        </tr>
+        <tr th:each="produto : ${produtos}">
+            <td th:text="${produto.nome}"></td>
+            <td th:text="${produto.preco}"></td>
+            <td>
+                <a th:href="@{/produto/{id}(id=${produto.id})}">Show</a>
+                <a th:href="@{/produto/{id}/editar(id=${produto.id})}">Editar</a>
+                <form th:action="@{/produto/{id}/deletar(id=${produto.id})}" method="post" style="display:inline;">
+                    <button type="submit">Deletar</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</h1>

@@ -1,0 +1,18 @@
+<!-- Catálogo -->
+ 
+<h1>ROMA</h1>
+
+    <table border="1">
+        <tr>
+            <th>Plataforma</th>
+            <th>Preço</th>
+        </tr>
+        <tr th:each="jogo : ${jogos}">
+            <td th:text="${jogo.titulo}"></td>
+            <td th:text="${jogo.plataforma}"></td>
+            <td th:text="${jogo.preco}"></td>
+            <td><a th:href="@{/jogo/{id}(id=${jogo.id})}">Show </a></td>
+        </tr>
+    </table>
+    <a href="/formularioJogo">Formulario</a>
+</h1>

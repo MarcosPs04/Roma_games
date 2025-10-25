@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="telaInicial.css">
+
+<body>
+  <div class="header">
+    <h1>Loja de Jogos</h1>
+
+  <div class="search-container">
+    <form action="/pesquisar" method="get" class="search-bar">
+      <input type="text" name="titulo" placeholder="Pesquisar jogos..." />
+      <button type="submit">Buscar</button>
+    </form>
+    <a href="/login" class="auth-button">Entrar / Cadastrar</a>
+  </div>
+</div>
+<br>
+  <div class="lista-jogos">
+    <ul>
+      <li th:each="jogo : ${jogos}">
+        <h2 th:text="${jogo.titulo}"></h2>
+        <p th:text="'Plataforma: ' + ${jogo.plataforma}"></p>
+        <p th:text="'Preço: R$ ' + ${jogo.preco}"></p>
+        <button type="submit">Adicionar ao carrinho</button>
+      </li>
+    </ul>
+  </div>
+</body>

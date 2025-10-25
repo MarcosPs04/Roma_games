@@ -1,0 +1,30 @@
+<h1>Adicionar Novo Jogo</h1>
+<form th:action="@{/cadastrarJogo}" th:method="post">
+
+    <label for="titulo">Titulo:</label>
+    <input type="text" th:name="titulo">
+    <br>
+
+    <label for="plataforma">Plataforma:</label>
+    <input type="text" th:name="plataforma">
+    <br>
+
+    <label for="anoLancamento">Ano de Lançamento:</label>
+    <input type="date" th:name="anoLancamento">
+    <br>
+
+    <label for="historia">História:</label>
+    <input type="text" th:name="historia">
+    <br>
+
+    <label for="preco">Preço:</label>
+    <input type="text" th:name="preco">
+    <br>
+
+    <label for="requisitosSys">Requisitos do Sistema:</label>
+    <input type="text" th:name="requisitosSys">
+    <br>
+
+    <button type="submit">Salvar</button>
+</form>
+<a href="/listar">Voltar para a Lista</a>

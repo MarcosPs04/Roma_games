@@ -1,0 +1,38 @@
+create table jogo(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    historia VARCHAR(255),
+    preco DOUBLE NOT NULL,
+    requisitosSys varchar(100),
+    anoLancamento date,
+    plataforma varchar(100)jogo
+);
+
+INSERT INTO produto (nome, descricao, preco) 
+VALUES ('Produto A', 'Descrição do Produto A', 19.99);
+
+SELECT * FROM produto;
+
+UPDATE produto 
+SET preco = 29.99 
+WHERE id = 1;
+
+DELETE FROM produto 
+WHERE id = 1;
+
+DELETE FROM produto;
+
+DROP TABLE produto;
+
+CREATE DATABASE meu_banco_de_dados;
+
+USE meu_banco_de_dados;
+
+SHOW TABLES;    
+
+//MEU BANCO DE DADOS
+
+ALTER TABLE nome_da_tabela
+DROP COLUMN nome_da_coluna;
+
+drop database loja;

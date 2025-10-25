@@ -1,0 +1,18 @@
+<form th:action="@{/addCarrinho}" th:method="POST">
+    <h1>Adicionar Novo Item</h1>
+
+    <label for="nome">Nome</label>
+    <input type="text" th:name="nome">
+    <br>
+
+    <label for="valor">Preço</label>
+    <input type="text" th:name="valor">
+    <br>
+
+    <label for="quantidade">Quantidade</label>
+    <input type="number" th:name="quantidade">
+    <br>
+
+    <button type="submit">Adicionar</button>
+</form>
+<a href="/listarCarrinho">Voltar para Lista</a>

@@ -1,0 +1,30 @@
+
+background-color
+border-radius
+box-shadow
+margin, margin-top, margin-bottom, margin-left, margin-right
+padding
+width, height
+display: flex, flex-direction, justify-content, align-items
+text-align
+font-size
+font-family
+color
+border
+outline
+transition
+cursor
+gap
+position, top, left, right, bottom
+z-index
+
+
+<div>
+<form>
+<input type="text">, <input type="email">, <input type="password">, <input type="checkbox">
+<label>
+<button>
+<img>
+<a>
+<h2>, <h1>, <span>, <br>
+<link rel="stylesheet" href="...">

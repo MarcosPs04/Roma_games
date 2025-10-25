@@ -1,0 +1,28 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>titulo</th>
+            <th>plataforma</th>
+            <th>anoLancamento</th>
+            <th>historia</th>
+            <th>preco</th>
+            <th>requisitosSys</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="jogo : ${jogos}">
+            <td th:text="${jogo.id}"></td>
+            <td th:text="${jogo.titulo}"></td>
+            <td th:text="${jogo.plataforma}"></td>
+            <td th:text="${jogo.anoLancamento}"></td>
+            <td th:text="${jogo.historia}"></td>
+            <td th:text="${jogo.preco}"></td>
+            <td th:text="${jogo.requisitosSys}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<a href="/listar">Voltar</a>
+<br>
+<a href="/formularioJogos">Adicionar Produto</a>

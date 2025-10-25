@@ -1,0 +1,15 @@
+<form th:action="@{/criarProduto}" th:method="post">
+    <label for="nome">Nome:</label>
+    <input type="text" th:name="nome">
+    <br>
+
+    <label for="descricao">Descrição:</label>
+    <input type="text" th:name="descricao">
+    <br>
+
+    <label for="preco">Preço:</label>
+    <input type="number" th:name="preco" step="0.01">
+    <br>
+
+    <button type="submit">Cadastrar</button>
+</form>

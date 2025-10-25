@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="cadastro.css">
+<body>
+    <div class="login-container">
+        <div class="login-header">
+        </div>
+        <form th:action="@{/cadastro}" th:method="post">
+            <label for="telefone"></label>
+            <input type="text" th:name="telefone" placeholder="Telefone">
+
+            <label for="email"></label>
+            <input type="text" th:name="email" placeholder="Email">
+            
+            <label for="senha"></label>
+            <input type="password" th:name="senha" placeholder="Senha">
+            
+            <label for="dataNascimento"></label>
+            <input type="date" th:name="dataNascimento">
+
+            <div class="options">
+            </div>
+            <button class="login-button" type="submit">Cadastrar</button>
+        </form>
+    </div>
+</body>
