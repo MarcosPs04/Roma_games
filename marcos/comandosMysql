@@ -35,4 +35,11 @@ SHOW TABLES;
 ALTER TABLE nome_da_tabela
 DROP COLUMN nome_da_coluna;
 
+ALTER TABLE nome_da_tabela
+RENAME COLUMN nome_antigo TO nome_novo;
+
 drop database loja;
+
+git add .
+git commit -m "mensagem explicando o que mudou"
+git push

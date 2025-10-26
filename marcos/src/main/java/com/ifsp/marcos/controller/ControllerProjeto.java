@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ifsp.marcos.model.Usuario;
 import com.ifsp.marcos.model.Jogo;
 import com.ifsp.marcos.model.JogoRepository;
 
@@ -31,13 +32,20 @@ public class ControllerProjeto {
     return "cadastro";
     }
     @PostMapping("/cadastro")
-    public String cadastrarUsuario(
-        @RequestParam(required = false) String telefone,
-        @RequestParam(required = false) String email,
-        @RequestParam(required = false) String senha,
-        @RequestParam(required = false) String dataNascimento
-    ) {
+    public String cadastroUser(
+        @RequestParam String email,
+        @RequestParam String telefone,
+        @RequestParam String senha,
+        @RequestParam String dataNascimento
+    ){
+        Usuario usuario = new Usuario();
+        usuario.setEmail(email);
+        usuario.setTelefone(telefone);
+        usuario.setSenha(senha);
+        usuario.setDataNascimento(dataNascimento);
+        jogoRepository.saveUser(usuario);
         return "redirect:/login";
+
     }
     @GetMapping("/listar")
     public String listar(Model model) {

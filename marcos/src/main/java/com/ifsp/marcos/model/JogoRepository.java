@@ -53,4 +53,15 @@ public class JogoRepository {
         List<Jogo> jogos = q.getResultList();
         return jogos;
     }
+        @Transactional
+    public void saveUser(Usuario usuario) {
+        String sql = "INSERT INTO usuario (email, telefone, senha, data_nascimento) VALUES (:email, :telefone, :senha, :data_nascimento)";
+
+        Query query = em.createNativeQuery(sql);
+        query.setParameter("email", usuario.getEmail());
+        query.setParameter("telefone", usuario.getTelefone());
+        query.setParameter("senha", usuario.getSenha());
+        query.setParameter("data_nascimento", usuario.getDataNascimento());
+        query.executeUpdate();
+    }
 }
