@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -44,16 +45,39 @@ public class ControllerProjeto {
         usuario.setSenha(senha);
         usuario.setDataNascimento(dataNascimento);
         jogoRepository.saveUser(usuario);
-        return "redirect:/login";
+        return "redirect:/telaInicio";
 
     }
-    @GetMapping("/listar")
-    public String listar(Model model) {
-        List<Jogo> jogos = jogoRepository.findAll();
+    @GetMapping("/listarJogos")
+    public String listarJogos(Model model) {
+        List<Jogo> jogos = jogoRepository.findAllJogos();
         model.addAttribute("jogos", jogos);
         return "jogos";
     }
+    @GetMapping("/listarUsers")
+    public String listarUsers(Model model) {
+        List<Usuario> usuarios = jogoRepository.findAllUsers();
+        model.addAttribute("usuarios", usuarios);
+        return "usuarios";
+    }
+    @PostMapping("/usuario/{id}/deletar")
+    public String deletarUser(@PathVariable long id) {
+        jogoRepository.deleteUser(id);
+        return "redirect:/listarUsers";
+    }
+    @GetMapping("DeleteAllUsers")
+    public String deleteAllUsers() {
+        jogoRepository.deleteAllUsers();
+        return "redirect:/listarUsers";
+    }
     
+    @GetMapping("/usuario/{id}/editar")
+    public String editarUsers(@PathVariable long id, Model model) {
+        Usuario usuario = jogoRepository.findUserById(id);
+        model.addAttribute("usuario", usuario);
+        return "cadastro";
+    }
+
     @GetMapping("/formularioJogo")
     public String formularioJogo() {   
         return "formularioJogos";
@@ -78,7 +102,7 @@ public class ControllerProjeto {
         if (titulo != null && !titulo.isEmpty()) {
             jogos = jogoRepository.findByTituloContaining(titulo);
         } else {
-            jogos = jogoRepository.findAll();
+            jogos = jogoRepository.findAllJogos();
         }
 
         model.addAttribute("jogos", jogos);

@@ -29,11 +29,18 @@ public class JogoRepository {
     }
 
     @Transactional
-    public List<Jogo> findAll() {
+    public List<Jogo> findAllJogos() {
         String sql = "SELECT * FROM jogo";
         Query q = em.createNativeQuery(sql, Jogo.class);
         List<Jogo> jogos = q.getResultList();
         return jogos;
+    }
+    @Transactional
+    public List<Usuario> findAllUsers() {
+        String sql = "SELECT * FROM usuario";
+        Query q = em.createNativeQuery(sql, Usuario.class);
+        List<Usuario> usuarios = q.getResultList();
+        return usuarios;
     }
 
     @Transactional
@@ -64,4 +71,26 @@ public class JogoRepository {
         query.setParameter("data_nascimento", usuario.getDataNascimento());
         query.executeUpdate();
     }
+    @Transactional
+    public void deleteUser(long id) {
+        String sql = "DELETE FROM usuario WHERE id = :id";
+        Query query = em.createNativeQuery(sql);
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+    @Transactional
+    public void deleteAllUsers() {
+        String sql = "DELETE FROM usuario";
+        Query query = em.createNativeQuery(sql);
+        query.executeUpdate();
+    }
+    @Transactional
+    public Usuario findUserById(long id) {
+        String sql = "SELECT * FROM usuario WHERE id = :id";
+        Query q = em.createNativeQuery(sql, Usuario.class);
+        q.setParameter("id", id);
+        Usuario usuario = (Usuario) q.getSingleResult();
+        return usuario;
+    }
+
 }

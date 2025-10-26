@@ -1,0 +1,36 @@
+<h1>ROMA</h1>
+
+<h1 th:if="${#lists.size(usuarios) == 0}">Nenhum cadastro</h1>
+
+<h1 th:if="${#lists.size(usuarios) > 0}">
+
+    <table border="1">
+        <tr>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Remover</th>
+            <th>Editar</th>
+        </tr>
+        <tr th:each="usuario : ${usuarios}">
+            <td th:text="${usuario.email}"></td>
+            <td th:text="${usuario.telefone}"></td>
+            <td>
+                <form th:action="@{/usuario/{id}/deletar(id=${usuario.id})}" th:method="Post" style="display: inline;">
+                    <button type="submit">Remover</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/usuario/{id}/editar(id=${usuario.id})}" th:method="get">
+                <button type="submit">Editar</button>
+            </form>
+
+            </td>
+        </tr>    
+    </table>
+    
+    <form th:action="DeleteAllUsers" th:method="Get">
+        <button type="submit">Limpar lista</button>
+    </form>
+    <br>
+</h1>
+    <a href="/cadastro">cadastrar</a>
