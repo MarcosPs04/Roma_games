@@ -1,6 +1,5 @@
 package com.ifsp.marcos.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.ifsp.marcos.model.Usuario;
 import com.ifsp.marcos.model.Jogo;
@@ -29,31 +29,40 @@ public class ControllerProjeto {
     return "login";
     }
     @GetMapping("/cadastro")
-    public String cadastro() {
+    public String cadastro(Model model) {
+        model.addAttribute("usuario", new Usuario());
     return "cadastro";
     }
-    @PostMapping("/cadastro")
-    public String cadastroUser(
-        @RequestParam String email,
-        @RequestParam String telefone,
-        @RequestParam String senha,
-        @RequestParam String dataNascimento
-    ){
-        Usuario usuario = new Usuario();
-        usuario.setEmail(email);
-        usuario.setTelefone(telefone);
-        usuario.setSenha(senha);
-        usuario.setDataNascimento(dataNascimento);
+    @PostMapping("/cadastroUser")
+    public String cadastroUser(@ModelAttribute Usuario usuario) {
         jogoRepository.saveUser(usuario);
         return "redirect:/telaInicio";
-
     }
+
     @GetMapping("/listarJogos")
     public String listarJogos(Model model) {
         List<Jogo> jogos = jogoRepository.findAllJogos();
         model.addAttribute("jogos", jogos);
         return "jogos";
     }
+    @PostMapping("/jogo/{id}/deletar")
+    public String deletarJogo(@PathVariable long id) {
+        jogoRepository.deleteJogo(id);
+        return "redirect:/listarJogos";
+    }
+    @GetMapping("DeleteAllJogos")
+    public String deleteAllJogos() {
+        jogoRepository.deleteAllJogos();
+        return "redirect:/listarJogos";
+    }
+    @GetMapping("/jogo/{id}/editar")
+    public String editarJogo(@PathVariable long id, Model model) {
+        Jogo jogo = jogoRepository.findById(id);
+        model.addAttribute("jogo", jogo);
+        return "formularioJogos";
+    }
+
+
     @GetMapping("/listarUsers")
     public String listarUsers(Model model) {
         List<Usuario> usuarios = jogoRepository.findAllUsers();
@@ -72,31 +81,24 @@ public class ControllerProjeto {
     }
     
     @GetMapping("/usuario/{id}/editar")
-    public String editarUsers(@PathVariable long id, Model model) {
+    public String editarUser(@PathVariable long id, Model model) {
         Usuario usuario = jogoRepository.findUserById(id);
         model.addAttribute("usuario", usuario);
         return "cadastro";
     }
 
     @GetMapping("/formularioJogo")
-    public String formularioJogo() {   
+    public String formularioJogo(Model model) {
+        model.addAttribute("jogo", new Jogo());   
         return "formularioJogos";
     }
-
-    @PostMapping("/cadastrarJogo")
-    public String cadastrarJogo(
-        @RequestParam String titulo,
-        @RequestParam String plataforma,
-        @RequestParam LocalDate anoLancamento,
-        @RequestParam String historia,
-        @RequestParam int preco,
-        @RequestParam String requisitosSys
-    ){
-        jogoRepository.save(new Jogo(titulo, plataforma, anoLancamento, historia, preco, requisitosSys));
-        return "redirect:/listar";
+    @PostMapping("/cadastroJogo")
+    public String cadastroJogo(@ModelAttribute Jogo jogo) {
+        jogoRepository.saveJogo(jogo);
+        return "redirect:/telaInicio";
     }
-    @GetMapping("/pesquisar")
-    public String pesquisar(@RequestParam(required = false) String titulo, Model model) {
+    @GetMapping("/pesquisarJogo")
+    public String pesquisarJogo(@RequestParam(required = false) String titulo, Model model) {
         List<Jogo> jogos;
         
         if (titulo != null && !titulo.isEmpty()) {
@@ -107,5 +109,32 @@ public class ControllerProjeto {
 
         model.addAttribute("jogos", jogos);
         return "telaInicial";
+    }
+    @GetMapping("/pesquisarJogoADM")
+    public String pesquisarJogoADM(@RequestParam(required = false) String id, Model model) {
+        List<Jogo> jogos;
+        
+        if (id != null && !id.isEmpty()) {
+            jogos = jogoRepository.findByIdContaining(id);
+        } else {
+            jogos = jogoRepository.findAllJogos();
+        }
+
+        model.addAttribute("jogos", jogos);
+        return "jogos";
+    }
+
+    @GetMapping("/pesquisarUser")
+    public String pesquisarUser(@RequestParam(required = false) String id, Model model) {
+        List<Usuario> usuarios;
+        
+        if (id != null && !id.isEmpty()) {
+            usuarios = jogoRepository.findByUserContaining(id);
+        } else {
+            usuarios = jogoRepository.findAllUsers();
+        }
+
+        model.addAttribute("usuarios", usuarios);
+        return "usuarios";
     }
 }

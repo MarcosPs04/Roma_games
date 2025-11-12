@@ -15,32 +15,21 @@ public class JogoRepository {
     private EntityManager em;
 
     @Transactional
-    public void save(Jogo jogo) {
-        String sql = "INSERT INTO jogo (titulo, plataforma, ano_lancamento, historia, preco, requisitos_sys) VALUES (:titulo, :plataforma, :ano_lancamento, :historia, :preco, :requisitos_sys)";
-
-        Query query = em.createNativeQuery(sql);
-        query.setParameter("titulo", jogo.getTitulo());
-        query.setParameter("plataforma", jogo.getPlataforma());
-        query.setParameter("ano_lancamento", jogo.getAnoLancamento());
-        query.setParameter("historia", jogo.getHistoria());
-        query.setParameter("preco", jogo.getPreco());
-        query.setParameter("requisitos_sys", jogo.getRequisitosSys());
-        query.executeUpdate();
+    public Jogo saveJogo(Jogo jogo) {
+        if (jogo.getId() == null) {
+            em.persist(jogo);
+            return jogo;
+        } else {
+            Jogo merged = em.merge(jogo);
+            return merged;
+        }
     }
-
     @Transactional
     public List<Jogo> findAllJogos() {
         String sql = "SELECT * FROM jogo";
         Query q = em.createNativeQuery(sql, Jogo.class);
         List<Jogo> jogos = q.getResultList();
         return jogos;
-    }
-    @Transactional
-    public List<Usuario> findAllUsers() {
-        String sql = "SELECT * FROM usuario";
-        Query q = em.createNativeQuery(sql, Usuario.class);
-        List<Usuario> usuarios = q.getResultList();
-        return usuarios;
     }
 
     @Transactional
@@ -60,16 +49,38 @@ public class JogoRepository {
         List<Jogo> jogos = q.getResultList();
         return jogos;
     }
-        @Transactional
-    public void saveUser(Usuario usuario) {
-        String sql = "INSERT INTO usuario (email, telefone, senha, data_nascimento) VALUES (:email, :telefone, :senha, :data_nascimento)";
+    @Transactional
+    public List<Jogo> findByIdContaining(String termo) {
+        String sql = "SELECT * FROM jogo WHERE LOWER(id) LIKE :termo";
+        Query q = em.createNativeQuery(sql, Jogo.class);
+        q.setParameter("termo", "%" + termo.toLowerCase() + "%");
+        List<Jogo> jogo = q.getResultList();
+        return jogo;
+    }
 
+    @Transactional
+    public void deleteJogo(long id) {
+        String sql = "DELETE FROM jogo WHERE id = :id";
         Query query = em.createNativeQuery(sql);
-        query.setParameter("email", usuario.getEmail());
-        query.setParameter("telefone", usuario.getTelefone());
-        query.setParameter("senha", usuario.getSenha());
-        query.setParameter("data_nascimento", usuario.getDataNascimento());
+        query.setParameter("id", id);
         query.executeUpdate();
+    }
+    @Transactional
+    public void deleteAllJogos() {
+        String sql = "DELETE FROM jogo";
+        Query query = em.createNativeQuery(sql);
+        query.executeUpdate();
+    }
+    
+    @Transactional
+    public Usuario saveUser(Usuario usuario) {
+        if (usuario.getId() == null) {
+            em.persist(usuario);
+            return usuario;
+        } else {
+            Usuario merged = em.merge(usuario);
+            return merged;
+        }
     }
     @Transactional
     public void deleteUser(long id) {
@@ -92,5 +103,19 @@ public class JogoRepository {
         Usuario usuario = (Usuario) q.getSingleResult();
         return usuario;
     }
-
+    @Transactional
+    public List<Usuario> findAllUsers() {
+        String sql = "SELECT * FROM usuario";
+        Query q = em.createNativeQuery(sql, Usuario.class);
+        List<Usuario> usuarios = q.getResultList();
+        return usuarios;
+    }
+    @Transactional
+    public List<Usuario> findByUserContaining(String termo) {
+        String sql = "SELECT * FROM usuario WHERE LOWER(id) LIKE :termo";
+        Query q = em.createNativeQuery(sql, Usuario.class);
+        q.setParameter("termo", "%" + termo.toLowerCase() + "%");
+        List<Usuario> usuarios = q.getResultList();
+        return usuarios;
+    }
 }

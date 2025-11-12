@@ -1,18 +1,45 @@
-<!-- Catálogo -->
- 
-<h1>ROMA</h1>
+ <h1>ROMA</h1>
+
+    <div class="search-container">
+        <form action="/pesquisarJogoADM" method="get" class="search-bar">
+            <input type="text" name="id" placeholder="Pesquisar Jogos..." />
+            <button type="submit">Buscar</button>
+        </form>
+
+<h1 th:if="${#lists.size(jogos) == 0}">Nenhum cadastro</h1>
+
+<div th:if="${#lists.size(jogos) > 0}">
+
 
     <table border="1">
         <tr>
+            <th>Id</th>
+            <th>Título</th>
             <th>Plataforma</th>
             <th>Preço</th>
+            <th>Remover</th>
         </tr>
         <tr th:each="jogo : ${jogos}">
+            <td th:text="${jogo.id}"></td>
             <td th:text="${jogo.titulo}"></td>
             <td th:text="${jogo.plataforma}"></td>
             <td th:text="${jogo.preco}"></td>
-            <td><a th:href="@{/jogo/{id}(id=${jogo.id})}">Show </a></td>
+            <td>
+                <form th:action="@{/jogo/{id}/deletar(id=${jogo.id})}" th:method="post" style="display: inline;">
+                    <button type="submit">Remover</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/jogo/{id}/editar(id=${jogo.id})}" th:method="get">
+                    <button type="submit">Editar</button>
+                </form>
+            </td>
         </tr>
     </table>
-    <a href="/formularioJogo">Formulario</a>
-</h1>
+
+    <form th:action="@{/DeleteAllJogos}" th:method="get">
+        <button type="submit">Limpar lista</button>
+    </form>
+    <br>
+</div>
+<a href="/formularioJogo">Formulario</a>

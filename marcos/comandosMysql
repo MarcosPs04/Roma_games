@@ -8,6 +8,16 @@ create table jogo(
     plataforma varchar(100)jogo
 );
 
+CREATE TABLE usuario (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    cpf VARCHAR(14) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20),
+    senha VARCHAR(255) NOT NULL,
+    data_nascimento DATE
+);
+
 INSERT INTO produto (nome, descricao, preco) 
 VALUES ('Produto A', 'Descrição do Produto A', 19.99);
 

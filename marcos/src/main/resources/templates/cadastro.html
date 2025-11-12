@@ -1,24 +1,32 @@
-<link rel="stylesheet" href="cadastro.css">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cadastro</title>
+    <link rel="stylesheet" th:href="@{/cadastro.css}" />
+</head>
+
 <body>
     <div class="login-container">
-        <div class="login-header">
-        </div>
-        <form th:action="@{/cadastro}" th:method="post">
-            <label for="telefone"></label>
-            <input type="text" th:name="telefone" placeholder="Telefone">
+        <div class="login-header"></div>
 
-            <label for="email"></label>
-            <input type="text" th:name="email" placeholder="Email">
-            
-            <label for="senha"></label>
-            <input type="password" th:name="senha" placeholder="Senha">
-            
-            <label for="dataNascimento"></label>
-            <input type="date" th:name="dataNascimento">
+        <form th:action="@{/cadastroUser}" th:method="post" th:object="${usuario}">
+            <input type="hidden" th:field="*{id}" />
 
-            <div class="options">
-            </div>
-            <button class="login-button" type="submit">Cadastrar</button>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" th:field="*{telefone}" placeholder="Telefone" />
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" th:field="*{email}" placeholder="Email" />
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" th:field="*{senha}" placeholder="Senha" />
+
+            <label for="dataNascimento">Data de Nascimento:</label>
+            <input type="date" id="dataNascimento" th:field="*{dataNascimento}" />
+
+            <button class="login-button" type="submit">Salvar</button>
         </form>
+        
     </div>
 </body>
+
+</html>
